@@ -46,17 +46,17 @@ class FaccialibroGcloud(object):
             ref = self.db.collection('hashtags').document(hsh).get()
             if ref.exists:
                 hash_ref = self.db.collection('hashtags').document(hsh)
-                hash_ref.update({str(timestamp): timestamp})
+                hash_ref.update({str(self.counter): str(timestamp)})
             else:
                 tmp = {
-                    str(timestamp): str(timestamp)
+                    str(self.counter): str(timestamp)
                 }
                 self.db.collection('hashtags').document(hsh).set(tmp)
         x = {
             'message': messaggio,
             'hashtags': hashtags,
             'timestamp': str(timestamp),
-            'id': self.counter
+            'id': str(self.counter)
         }
         print(x)
         self.counter = self.counter + 1
@@ -76,7 +76,7 @@ class FaccialibroGcloud(object):
             return None
 
     def get_topics(self, topic):
-        hash_ref = self.db.collection('hashtags').document(topic).get()
+        hash_ref = self.db.collection('hashtags').document('#'+topic).get()
         lists = []
         messages = []
         if hash_ref.exists:
@@ -86,7 +86,7 @@ class FaccialibroGcloud(object):
                 lists.append(value)
 
             for x in lists:
-                message_ref = self.db.collection('hashtags').document(x).get()
+                message_ref = self.db.collection('messages').document(x).get()
                 messages.append(message_ref.get('message'))
             return messages
         else:
