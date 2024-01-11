@@ -28,7 +28,7 @@ class FacciaLibroChirps(Resource):
         message = request.json
         if 1 <= len(message) <= 100:
             h = faccialibro_dao.add_chirps(message)
-            return h, 400
+            return h, 201
         else:
             return None, 400
 
