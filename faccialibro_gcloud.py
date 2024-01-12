@@ -73,6 +73,8 @@ class FaccialibroGcloud(object):
         chirp = self.db.collection('messages').document(ids).get()
 
         if chirp.exists:
+            # qui conosco i vari campi contenuti all'interno del document
+            # quindi posso usare questa strada
             h = {
                 'id': str(chirp.get('timestamp')),
                 'message': chirp.get('message'),
@@ -88,6 +90,9 @@ class FaccialibroGcloud(object):
         messages = []
         if hash_ref.exists:
             data = hash_ref.to_dict()
+            # qui non conosco i vari campi contenuti (ogni chirp con l'hashtag)
+            # crea un campo col rispettivo valore
+            # quindi devo usare una strada alternativa
             for key, value in data.items():
                 print(f"{key}: {value}")
                 lists.append(value)
