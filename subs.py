@@ -3,10 +3,10 @@ from google.cloud import pubsub_v1
 import sys
 import re
 
-# project_id = "your-project-id"
-# subscription_id = "your-subscription-id"
-# Number of seconds the subscriber should listen for messages
-# timeout = 5.0
+# LANCIARE COME python3 subs.py hashtag
+# NON USARE IL CARATTERE "#"
+# RICORDARSI DI GENERARE IL FILE credentials.json
+
 nome_script, primo = sys.argv
 
 subscriber = pubsub_v1.SubscriberClient()
