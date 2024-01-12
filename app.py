@@ -32,6 +32,8 @@ class FacciaLibroChirps(Resource):
         else:
             return None, 400
 
+
+class FacciaLibroChirpsGet(Resource):
     def get(self, ids):
         h = faccialibro_dao.get_chirps(ids)
         if h is not None:
@@ -55,7 +57,9 @@ class FacciaLibroClean(Resource):
         return None, 200
 
 
-api.add_resource(FacciaLibroChirps, f'{basePath}/chirp')
+# perchè uso due endpoint separati per chirp? Perchè cambiano i parametri passati nella url:
+api.add_resource(FacciaLibroChirps, f'{basePath}/chirp')  # POST con payload json
+api.add_resource(FacciaLibroChirpsGet, f'{basePath}/chirp/<string:ids>')  # GET (please url-encode id)
 api.add_resource(FacciaLibroTopics, f'{basePath}/topic/<string:topic>')
 api.add_resource(FacciaLibroClean, f'{basePath}/clean')
 
