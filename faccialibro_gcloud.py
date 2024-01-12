@@ -1,6 +1,11 @@
 from google.cloud import firestore
 import re
-import time, datetime
+import datetime
+from google.cloud import pubsub_v1
+
+# questa parte qui per il punto 3
+publisher = pubsub_v1.PublisherClient()
+topic_path = publisher.topic_path('travel2-405610', 'hashtags')
 
 
 class FaccialibroGcloud(object):
@@ -59,6 +64,8 @@ class FaccialibroGcloud(object):
             'id': str(self.counter)
         }
         print(x)
+        data = messaggio.encode("utf-8")  # punto 3 anche qui
+        publisher.publish(topic_path, data)  # e qui
         self.counter = self.counter + 1
         return x
 
