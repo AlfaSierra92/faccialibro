@@ -1,6 +1,7 @@
 # SERVE AL FINE DI IMPLEMENTARE UN TEST PER LE GCLOUD FUNCTIONS;
 # E' UNA COSA IN PIU'; NON E' RICHIESTA DALLA TRACCIA!!!!
 import json
+import requests
 
 
 def hello_firestore(data, context):
@@ -21,4 +22,8 @@ def hello_firestore(data, context):
 
     print("\nNew value:")
     print(json.dumps(data["value"]["fields"]["message"]["stringValue"]))
+    message = json.dumps(data["value"]["fields"]["message"]["stringValue"])
+    requests.post(
+        'https://api.telegram.org/botxxxx:yyyyy/sendMessage?chat_id=zzzzz&text='+message
+    )
 
