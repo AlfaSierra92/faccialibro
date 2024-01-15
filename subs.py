@@ -10,9 +10,18 @@ import re
 nome_script, primo = sys.argv
 
 subscriber = pubsub_v1.SubscriberClient()
+publisher = pubsub_v1.PublisherClient()
 # The `subscription_path` method creates a fully qualified identifier
 # in the form `projects/{project_id}/subscriptions/{subscription_id}`
-subscription_path = subscriber.subscription_path('travel2-405610', 'subs')
+
+topic_path = publisher.topic_path('travel2-405610', primo)
+subscription_path = subscriber.subscription_path('travel2-405610', primo+'subs')
+try:
+    subscription = subscriber.create_subscription(
+        request={"name": subscription_path, "topic": topic_path}
+    )
+except:
+    print("Subs already created")
 
 
 def callback(message: pubsub_v1.subscriber.message.Message) -> None:

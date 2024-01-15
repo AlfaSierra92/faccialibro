@@ -5,7 +5,7 @@ from google.cloud import pubsub_v1
 
 # questa parte qui per il punto 3
 publisher = pubsub_v1.PublisherClient()
-topic_path = publisher.topic_path('travel2-405610', 'hashtags')
+# topic_path = publisher.topic_path('travel2-405610', 'hashtags')
 
 
 class FaccialibroGcloud(object):
@@ -65,6 +65,11 @@ class FaccialibroGcloud(object):
         }
         print(x)
         data = messaggio.encode("utf-8")  # punto 3 anche qui
+        topic_path = publisher.topic_path('travel2-405610', hashtags[0][1:])
+        try:
+            topic = publisher.create_topic(request={"name": topic_path})
+        except:
+            print('Topic already created')
         publisher.publish(topic_path, data)  # e qui
         self.counter = self.counter + 1
         return x
